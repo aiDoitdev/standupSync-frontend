@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="linear-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5E6AD2"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="48" height="48" rx="10" fill="url(#linear-grad)"/>
+  <!-- Linear logo mark: overlapping arcs forming the "L" geometric shape -->
+  <!-- Top-right arc segment -->
+  <path d="M34 12 A16 16 0 0 1 36 36 L28.3 28.3" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Bottom-left arc segment -->
+  <path d="M12 36 A16 16 0 0 1 36 12 L28.3 19.7" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.55"/>
+  <!-- Diagonal line connecting the two arcs — the signature Linear bolt -->
+  <line x1="13" y1="35" x2="35" y2="13" stroke="white" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* ── Light mode (default for landing page override via .dark) ── */
+  :root {
+    --bg-page: #f5f3ff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf8ff;
+    --border-card: rgba(139, 92, 246, 0.18);
+    --text-primary: #1e1040;
+    --text-secondary: #5b21b6;
+    --text-muted: #7c3aed;
+    --input-bg: #ffffff;
+    --input-border: rgba(139, 92, 246, 0.3);
+    --input-focus: #7c3aed;
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --nav-border: rgba(139, 92, 246, 0.15);
+  }
+
+  /* ── Dark mode ── */
+  .dark {
+    --bg-page: #0d0628;
+    --bg-card: rgba(109, 40, 217, 0.1);
+    --bg-card-hover: rgba(109, 40, 217, 0.16);
+    --border-card: rgba(139, 92, 246, 0.22);
+    --text-primary: #ffffff;
+    --text-secondary: #c4b5fd;
+    --text-muted: #a78bfa;
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(139, 92, 246, 0.3);
+    --input-focus: #7c3aed;
+    --nav-bg: rgba(13, 6, 40, 0.75);
+    --nav-border: rgba(139, 92, 246, 0.2);
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-jakarta, 'Plus Jakarta Sans'), var(--font-inter, Inter), system-ui, sans-serif;
+  }
+
+  /* Landing page keeps the dark bg via body #0d0628 set inline */
+  .landing-page body {
+    background-color: #0d0628;
+    color: white;
+  }
+}
+
+@layer components {
+  /* ── Semantic card ── */
+  .app-card {
+    @apply rounded-2xl border backdrop-blur-sm transition-all duration-200;
+    background: var(--bg-card);
+    border-color: var(--border-card);
+    box-shadow: 0 1px 4px rgba(109, 40, 217, 0.07), 0 4px 16px rgba(109, 40, 217, 0.05);
+  }
+  .app-card:hover {
+    background: var(--bg-card-hover);
+  }
+
+  /* ── Premium input ── */
+  .app-input {
+    @apply rounded-xl px-4 py-2.5 w-full outline-none text-sm transition-all duration-200;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+  }
+  .app-input:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  }
+  .app-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  /* ── Gradient button ── */
+  .btn-primary {
+    @apply px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white rounded-xl font-semibold text-sm shadow-md shadow-purple-900/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* ── Ghost button ── */
+  .btn-ghost {
+    @apply px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200;
+    border: 1px solid var(--border-card);
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.4);
+  }
+
+  /* ── Badge ── */
+  .badge {
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  /* ── Label ── */
+  .app-label {
+    @apply block text-sm font-medium mb-1.5;
+    color: var(--text-secondary);
+  }
+
+  /* ── Tab navigation strip ── */
+  .tab-strip {
+    @apply flex items-center gap-1 p-1 rounded-2xl border;
+    background: var(--bg-card);
+    border-color: var(--border-card);
+    box-shadow: 0 1px 3px rgba(109, 40, 217, 0.06);
+  }
+  .tab-item {
+    @apply flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer select-none;
+    color: var(--text-muted);
+  }
+  .tab-item:hover {
+    background: rgba(139, 92, 246, 0.08);
+    color: var(--text-primary);
+  }
+  .tab-item.active {
+    background: rgba(109, 40, 217, 0.16);
+    color: var(--text-secondary);
+  }
+  .dark .tab-item.active {
+    background: rgba(109, 40, 217, 0.32);
+    color: #c4b5fd;
+  }
+
+  /* ── Team / section pill selector ── */
+  .team-pill {
+    @apply flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border transition-all duration-200 cursor-pointer whitespace-nowrap;
+    background: var(--bg-card);
+    border-color: var(--border-card);
+    color: var(--text-muted);
+  }
+  .team-pill:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    color: var(--text-primary);
+  }
+  .team-pill.selected {
+    background: rgba(109, 40, 217, 0.12);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: var(--text-secondary);
+  }
+  .dark .team-pill.selected {
+    background: rgba(109, 40, 217, 0.28);
+    color: #c4b5fd;
+  }
+
+  /* ── Stat card icon box ── */
+  .stat-icon-box {
+    @apply w-9 h-9 rounded-xl flex items-center justify-center mb-3 flex-shrink-0;
+  }
+
+  /* ── Page section header ── */
+  .section-header {
+    @apply text-base font-semibold mb-5 flex items-center gap-2;
+    color: var(--text-primary);
+  }
+
+  /* ── Table column header ── */
+  .tbl-head {
+    @apply pb-3 text-left text-xs font-semibold uppercase tracking-wider;
+    color: var(--text-secondary);
+  }
+}
+
+/* ── Subtle glow for dark themed cards ── */
+.dark .glow-card {
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.15), 0 4px 32px rgba(109, 40, 217, 0.18);
+}
+
+/* ── Light mode: disable box-shadow on dark variant cards ── */
+.dark .app-card {
+  box-shadow: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.55);
+}
+
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15); }
+  50%       { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.04); }
+}
+
