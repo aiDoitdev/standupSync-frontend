@@ -205,14 +205,45 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: shouldReduce ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...transitions.hero, delay: 0.25 }}
-            className="text-lg text-violet-200/80 mb-9 leading-relaxed max-w-xl"
+            className="text-lg text-violet-200/80 mb-6 leading-relaxed max-w-xl"
           >
-            StandupSync's{' '}
-            <strong className="text-white font-semibold">AI Task Radar</strong> tracks every update,{' '}
-            <strong className="text-white font-semibold">Blocker Intelligence</strong> auto-detects
-            issues, and your team gets a smart daily summary —{' '}
-            <strong className="text-white font-semibold">no Zoom call needed</strong>.
+            Your team submits a 30-second async check-in. StandupSync does the rest —
+            no Zoom call, no scheduling, no missed updates.
           </m.p>
+
+          {/* Feature highlight cards */}
+          <m.div
+            initial={{ opacity: 0, y: shouldReduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...transitions.hero, delay: 0.32 }}
+            className="flex flex-col sm:flex-row gap-3 mb-8"
+          >
+            {/* AI Task Radar */}
+            <div className="flex-1 flex items-start gap-3 px-4 py-4 rounded-2xl bg-gradient-to-br from-violet-600/20 to-purple-700/10 border border-violet-400/30 backdrop-blur-sm">
+              <div className="w-9 h-9 rounded-xl bg-violet-500/20 border border-violet-400/30 flex items-center justify-center text-base flex-shrink-0">
+                🎯
+              </div>
+              <div>
+                <p className="text-white text-sm font-bold mb-0.5">AI Task Radar</p>
+                <p className="text-violet-300 text-xs leading-relaxed">
+                  Automatically tracks every update across your team — nothing slips through.
+                </p>
+              </div>
+            </div>
+
+            {/* Blocker Intelligence */}
+            <div className="flex-1 flex items-start gap-3 px-4 py-4 rounded-2xl bg-gradient-to-br from-fuchsia-600/20 to-purple-700/10 border border-fuchsia-400/30 backdrop-blur-sm">
+              <div className="w-9 h-9 rounded-xl bg-fuchsia-500/20 border border-fuchsia-400/30 flex items-center justify-center text-base flex-shrink-0">
+                🛡️
+              </div>
+              <div>
+                <p className="text-white text-sm font-bold mb-0.5">Blocker Intelligence</p>
+                <p className="text-violet-300 text-xs leading-relaxed">
+                  Detects blockers before they escalate and surfaces them in your daily digest.
+                </p>
+              </div>
+            </div>
+          </m.div>
 
           {/* Email form */}
           <m.div
