@@ -7,8 +7,9 @@
     scroll-behavior: smooth;
   }
 
-  /* ── Light mode (default for landing page override via .dark) ── */
+  /* ── App design tokens — light mode ───────────────────────────── */
   :root {
+    /* App tokens (used by existing .app-card, .app-input, etc.) */
     --bg-page: #f5f3ff;
     --bg-card: #ffffff;
     --bg-card-hover: #faf8ff;
@@ -21,10 +22,33 @@
     --input-focus: #7c3aed;
     --nav-bg: rgba(255, 255, 255, 0.8);
     --nav-border: rgba(139, 92, 246, 0.15);
+
+    /* shadcn/ui tokens — light (violet-flavoured) */
+    --background: 250 100% 98%;       /* #f5f3ff */
+    --foreground: 251 68% 18%;        /* #1e1040 */
+    --card: 0 0% 100%;
+    --card-foreground: 251 68% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 251 68% 18%;
+    --primary: 262 72% 52%;           /* #7c3aed */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 263 55% 40%;         /* #5b21b6 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 270 40% 96%;
+    --muted-foreground: 262 50% 50%;
+    --accent: 263 67% 92%;
+    --accent-foreground: 263 72% 35%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 263 50% 88%;
+    --input: 263 50% 88%;
+    --ring: 262 72% 52%;
+    --radius: 0.75rem;
   }
 
-  /* ── Dark mode ── */
+  /* ── App design tokens — dark mode ────────────────────────────── */
   .dark {
+    /* App tokens */
     --bg-page: #0d0628;
     --bg-card: rgba(109, 40, 217, 0.1);
     --bg-card-hover: rgba(109, 40, 217, 0.16);
@@ -37,6 +61,27 @@
     --input-focus: #7c3aed;
     --nav-bg: rgba(13, 6, 40, 0.75);
     --nav-border: rgba(139, 92, 246, 0.2);
+
+    /* shadcn/ui tokens — dark */
+    --background: 251 68% 9%;         /* #0d0628 */
+    --foreground: 0 0% 100%;
+    --card: 263 67% 14%;
+    --card-foreground: 0 0% 100%;
+    --popover: 263 67% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 262 72% 65%;           /* #a78bfa */
+    --primary-foreground: 251 68% 9%;
+    --secondary: 263 55% 75%;         /* #c4b5fd */
+    --secondary-foreground: 251 68% 9%;
+    --muted: 263 40% 18%;
+    --muted-foreground: 263 30% 70%;
+    --accent: 263 50% 22%;
+    --accent-foreground: 263 70% 85%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 263 40% 25%;
+    --input: 263 40% 25%;
+    --ring: 262 72% 65%;
   }
 
   body {

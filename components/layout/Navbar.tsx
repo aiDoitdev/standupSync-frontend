@@ -2,7 +2,13 @@
 
 import { m } from 'framer-motion';
 import Link from 'next/link';
-import { transitions } from '@/lib/animations.js';
+import { transitions } from '@/lib/animations';
+
+const NAV_LINKS = [
+  { label: 'Features',    href: '#features'    },
+  { label: 'How it Works', href: '#how-it-works' },
+  { label: 'Pricing',     href: '#pricing'     },
+] as const;
 
 export default function Navbar() {
   return (
@@ -17,13 +23,9 @@ export default function Navbar() {
             <span className="text-lg font-bold text-white tracking-tight">StandupSync</span>
           </Link>
 
-          {/* Nav Links */}
+          {/* Nav links */}
           <div className="hidden md:flex items-center gap-7">
-            {[
-              { label: 'Features', href: '#features' },
-              { label: 'How it Works', href: '#how-it-works' },
-              { label: 'Pricing', href: '#pricing' },
-            ].map((item) => (
+            {NAV_LINKS.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}

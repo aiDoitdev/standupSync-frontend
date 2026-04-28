@@ -1,4 +1,4 @@
-import Navbar from '@/components/layout/Navbar.jsx';
+import Navbar from '@/components/layout/Navbar';
 import HeroSection from '@/components/sections/HeroSection.jsx';
 import HowItWorksSection from '@/components/sections/HowItWorksSection.jsx';
 import FeaturesSection from '@/components/sections/FeaturesSection.jsx';
