@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import AnimatedSection from '@/components/ui/AnimatedSection.jsx';
 import { transitions } from '@/lib/animations.js';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/v1';
 
 export default function WaitlistSection() {
   const [email, setEmail] = useState('');

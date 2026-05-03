@@ -4,7 +4,7 @@ import { m, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import { transitions } from '@/lib/animations.js';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/v1';
 
 // Live dashboard mockup — shows the AI standup product in action
 function DashboardMockup() {
