@@ -260,7 +260,7 @@ export default function HeroSection() {
                   placeholder="Enter your work email"
                   required
                   disabled={loading}
-                  className="flex-1 px-5 py-4 bg-white/8 border border-white/15 rounded-xl text-white placeholder-violet-400 focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-all text-sm disabled:opacity-60"
+                  className="flex-1 px-5 py-4 bg-white border border-white/15 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-violet-400 transition-all text-sm disabled:opacity-60"
                 />
                 <m.button
                   type="submit"
