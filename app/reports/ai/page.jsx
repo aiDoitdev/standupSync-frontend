@@ -128,9 +128,13 @@ const COMMON_TZ = [
   'Asia/Kolkata','America/Los_Angeles','America/New_York','Europe/London','Europe/Berlin','Asia/Singapore','Asia/Tokyo','Australia/Sydney','UTC',
 ];
 
-function ScheduleStrip({ teamId, onChange }) {
+const CADENCE_WINDOW = { weekly: 7, biweekly: 14, monthly: 30 };
+
+function ScheduleStrip({ teamId, onChange, onRunComplete }) {
   const [schedule, setSchedule] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [runResult, setRunResult] = useState(null);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
 
@@ -171,6 +175,20 @@ function ScheduleStrip({ teamId, onChange }) {
       setError(e.message);
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function runNow() {
+    setRunning(true); setError(''); setRunResult(null);
+    try {
+      const windowDays = CADENCE_WINDOW[schedule.cadence] ?? 7;
+      const result = await apiCall(`/ai-task-radar/${teamId}/run`, 'POST', { window_days: windowDays });
+      setRunResult(result);
+      onRunComplete?.();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setRunning(false);
     }
   }
 
@@ -243,6 +261,27 @@ function ScheduleStrip({ teamId, onChange }) {
           {error && <span className="text-xs" style={{ color: '#f87171' }}>{error}</span>}
           <button onClick={save} disabled={saving} className="btn-primary" style={{ padding: '8px 18px', fontSize: 13 }}>
             {saving ? 'Saving…' : 'Save schedule'}
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3 mt-3 pt-3" style={{ borderTop: '1px solid var(--border-card)' }}>
+        <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+          Trigger an analysis immediately using the last {CADENCE_WINDOW[schedule.cadence] ?? 7} days of data.
+        </div>
+        <div className="ml-auto flex items-center gap-3">
+          {runResult && (
+            <span className="text-xs" style={{ color: '#34d399' }}>
+              ✓ Run started — score {runResult.team_score ?? '…'}
+            </span>
+          )}
+          <button
+            onClick={runNow}
+            disabled={running}
+            className="btn-secondary"
+            style={{ padding: '8px 18px', fontSize: 13 }}
+          >
+            {running ? 'Running…' : 'Run now'}
           </button>
         </div>
       </div>
@@ -673,6 +712,7 @@ function AiTaskRadarContent() {
   const [teamsLoading, setTeamsLoading] = useState(true);
   const [selectedRunId, setSelectedRunId] = useState(null);
   const [planBlocked, setPlanBlocked] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0);
 
   const isManager = user?.role === 'manager';
 
@@ -788,11 +828,11 @@ function AiTaskRadarContent() {
               />
             ) : (
               <>
-                <ScheduleStrip teamId={selectedTeamId} onChange={() => {}} />
+                <ScheduleStrip teamId={selectedTeamId} onChange={() => {}} onRunComplete={() => setHistoryKey((k) => k + 1)} />
                 <IntegrationsPanel teamId={selectedTeamId} />
                 <div>
                   <h3 className="font-bold mb-3" style={{ fontSize: 16, color: 'var(--text-primary)' }}>Report history</h3>
-                  <HistoryList teamId={selectedTeamId} onSelect={(r) => setSelectedRunId(r.id)} />
+                  <HistoryList key={historyKey} teamId={selectedTeamId} onSelect={(r) => setSelectedRunId(r.id)} />
                 </div>
               </>
             )
