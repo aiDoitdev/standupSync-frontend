@@ -35,6 +35,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const resolved: Theme = stored === 'light' ? 'light' : 'dark';
     setTheme(resolved);
     document.documentElement.classList.toggle('dark', resolved === 'dark');
+    document.documentElement.setAttribute('data-theme', resolved);
     setMounted(true);
   }, []);
 
@@ -43,6 +44,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setTheme(next);
     localStorage.setItem(STORAGE_KEYS.theme, next);
     document.documentElement.classList.toggle('dark', next === 'dark');
+    document.documentElement.setAttribute('data-theme', next);
   }
 
   // Prevent flash — don't render until theme is resolved from localStorage

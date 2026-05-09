@@ -336,29 +336,29 @@ function MemberDashboard() {
 
   return (
     <Layout>
+      <div className="ss-page">
       {/* Page header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8">
+      <div className="ss-page-head">
         <div>
           {teams.length > 1 ? (
             <select
               value={selectedTeamIdx}
               onChange={(e) => setSelectedTeamIdx(Number(e.target.value))}
-              className="text-2xl font-bold bg-transparent border-none focus:ring-0 outline-none cursor-pointer"
-              style={{ color: 'var(--text-primary)' }}
+              className="ss-page-title bg-transparent border-none focus:ring-0 outline-none cursor-pointer"
             >
               {teams.map((t, idx) => (
                 <option key={t.id} value={idx}>{t.name}</option>
               ))}
             </select>
           ) : (
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{teamName}</h1>
+            <h1 className="ss-page-title">{teamName}</h1>
           )}
-          <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>{formatDate()}</p>
+          <p className="ss-page-sub">{formatDate()}</p>
         </div>
         {streak > 0 && (
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border" style={{ background: 'rgba(251,146,60,0.1)', borderColor: 'rgba(251,146,60,0.3)' }}>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full border" style={{ background: 'rgba(251,146,60,0.08)', borderColor: 'rgba(251,146,60,0.25)' }}>
             <span className="text-xl">🔥</span>
-            <span className="text-sm font-semibold text-orange-500">{streak} day streak</span>
+            <span className="text-sm font-semibold" style={{ color: 'var(--warning)' }}>{streak} day streak</span>
           </div>
         )}
       </div>
@@ -366,9 +366,9 @@ function MemberDashboard() {
       {loading && <MemberDashboardSkeleton />}
 
       {!loading && (
-        <div className="space-y-5 max-w-xl">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 680 }}>
           {/* Today's check-in card */}
-          <div className="app-card glow-card p-6">
+          <div className="ss-card" style={{ padding: 24 }}>
             <h2 className="text-base font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Your Check-in Today</h2>
             {myCheckin?.submitted_at ? (
               <div className="space-y-2 text-sm">
@@ -419,7 +419,7 @@ function MemberDashboard() {
           </div>
 
           {/* Streak card */}
-          <div className="app-card glow-card p-6">
+          <div className="ss-card" style={{ padding: 24 }}>
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>Check-in Streak</h2>
               <div className="tab-strip">
@@ -450,9 +450,9 @@ function MemberDashboard() {
 
           {/* My Active Blockers */}
           {myBlockers.length > 0 && (
-            <div className="app-card glow-card p-6">
-              <h2 className="text-base font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
-                🚧 My Active Blockers
+            <div className="ss-card" style={{ padding: 24 }}>
+              <h2 className="text-base font-semibold mb-4" style={{ color: 'var(--fg)' }}>
+                My Active Blockers
               </h2>
               <div className="space-y-2">
                 {myBlockers.map((b) => (
@@ -489,6 +489,7 @@ function MemberDashboard() {
           )}
         </div>
       )}
+      </div>
     </Layout>
   );
 }
@@ -498,8 +499,8 @@ function TeamCard({ team, selected, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`text-left w-full app-card p-5 transition-all duration-200 ${selected ? 'ring-1 ring-violet-500' : ''}`}
-      style={selected ? { borderColor: 'rgba(139,92,246,0.5)', background: 'rgba(109,40,217,0.18)' } : {}}
+      className={`text-left w-full ss-card p-5 transition-all duration-200 ${selected ? 'ring-1 ring-violet-500' : ''}`}
+      style={selected ? { borderColor: 'var(--accent)', background: 'var(--accent-soft)' } : {}}
     >
       <div className="flex items-start justify-between mb-3">
         <h3 className="font-semibold text-base leading-tight pr-2" style={{ color: 'var(--text-primary)' }}>{team.name}</h3>
@@ -576,7 +577,7 @@ function TeamDetailPanel({ team, members, checkins, openBlockers, pendingInvites
   const progressPct = totalCount > 0 ? Math.round((submittedCount / totalCount) * 100) : 0;
 
   return (
-    <div className="app-card glow-card mt-2 p-6">
+    <div className="ss-card mt-2 p-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div>
           <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{team.name}</h2>
@@ -850,15 +851,16 @@ function ManagerDashboard() {
 
   return (
     <Layout>
+      <div className="ss-page">
       {/* Page header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div className="ss-page-head">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>My Teams</h1>
-          <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>{formatDate()}</p>
+          <h1 className="ss-page-title">My Teams</h1>
+          <p className="ss-page-sub">{formatDate()}</p>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
           {/* Date picker for team check-ins */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)' }}>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{ background: 'var(--bg-elev)', border: '1px solid var(--border)' }}>
             <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} style={{ color: 'var(--text-muted)' }}>
               <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" strokeLinecap="round" />
             </svg>
@@ -914,7 +916,7 @@ function ManagerDashboard() {
 
       {/* Create team form */}
       {showCreate && (
-        <div className="app-card glow-card p-5 mb-6">
+        <div className="ss-card p-5">
           <h2 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Create New Team</h2>
           <form onSubmit={handleCreateTeam} className="flex flex-col sm:flex-row gap-3">
             <input
@@ -960,7 +962,7 @@ function ManagerDashboard() {
 
       {/* Empty state */}
       {!loading && teams.length === 0 && (
-        <div className="app-card glow-card p-12 text-center">
+        <div className="ss-card p-12 text-center">
           <div className="text-5xl mb-4">🚀</div>
           <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Create your first team</h2>
           <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: 'var(--text-muted)' }}>
@@ -999,6 +1001,7 @@ function ManagerDashboard() {
           )}
         </>
       )}
+      </div>
     </Layout>
   );
 }

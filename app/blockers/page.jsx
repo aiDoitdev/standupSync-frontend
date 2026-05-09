@@ -529,28 +529,22 @@ function BlockersPageInner() {
 
   return (
     <Layout>
+      <div className="ss-page">
       {/* Page header */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+      <div className="ss-page-head">
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2.5" style={{ color: 'var(--text-primary)' }}>
-            <BlockerIcon className="w-6 h-6 text-violet-400" />
-            Blockers
-          </h1>
-          <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
+          <h1 className="ss-page-title">Blockers</h1>
+          <p className="ss-page-sub">
             {user?.role === 'manager' ? 'Track and resolve team impediments' : 'Your blockers — created by you or assigned to you'}
           </p>
         </div>
         {user?.role === 'manager' && (
           <button
             onClick={() => router.push('/blockers/ai' + (selectedTeamId ? `?team_id=${selectedTeamId}` : ''))}
-            className="flex items-center gap-2 text-sm font-semibold self-start sm:self-auto transition-all"
-            style={{ padding: '9px 16px', borderRadius: 10, background: 'linear-gradient(135deg, rgba(139,92,246,0.18), rgba(109,40,217,0.12))', border: '1px solid rgba(139,92,246,0.35)', color: '#c4b5fd' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(139,92,246,0.28), rgba(109,40,217,0.2))'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(139,92,246,0.18), rgba(109,40,217,0.12))'; }}
+            className="ss-btn accent"
           >
             <span>✨</span>
-            Blocker Intelligence
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            Blocker Intel
           </button>
         )}
       </div>
@@ -593,7 +587,7 @@ function BlockersPageInner() {
       )}
 
       {!selectedTeamId && (
-        <div className="app-card glow-card text-center py-14 text-sm" style={{ color: 'var(--text-muted)' }}>
+        <div className="ss-card text-center py-14 text-sm" style={{ color: 'var(--text-muted)' }}>
           Select a team to view blockers.
         </div>
       )}
@@ -601,7 +595,7 @@ function BlockersPageInner() {
       {selectedTeamId && loading && <BlockersListSkeleton />}
 
       {selectedTeamId && !loading && blockers.length === 0 && (
-        <div className="app-card glow-card text-center py-14">
+        <div className="ss-card text-center py-14">
           <div className="flex justify-center mb-3 text-green-500"><CheckCircleIcon className="w-10 h-10" /></div>
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             {statusFilter ? `No ${STATUS_CONFIG[statusFilter]?.label.toLowerCase() || statusFilter} blockers.` : 'No blockers found.'}
@@ -687,6 +681,7 @@ function BlockersPageInner() {
           onStatusChange={() => { fetchBlockers(); }}
         />
       )}
+      </div>
     </Layout>
   );
 }

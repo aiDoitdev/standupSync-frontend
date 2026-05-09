@@ -275,7 +275,7 @@ function DateRangePicker({ startDate, endDate, onStartChange, onEndChange }) {
 // ─── Upgrade CTA ──────────────────────────────────────────────────────────────
 function UpgradeCTA({ onBilling }) {
   return (
-    <div className="app-card glow-card p-12 text-center max-w-lg mx-auto mt-8">
+    <div className="ss-card p-12 text-center max-w-lg mx-auto mt-8">
       <div className="text-5xl mb-4">📊</div>
       <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
         Reports are a Starter feature
@@ -307,7 +307,7 @@ function UpgradeCTA({ onBilling }) {
 // ─── Section wrapper ─────────────────────────────────────────────────────────
 function Section({ title, children, accent }) {
   return (
-    <div className="app-card glow-card p-6">
+    <div className="ss-card p-6">
       <div className="flex items-center gap-3 mb-4">
         <div className="shrink-0 rounded-full" style={{ width: 3, height: 22, background: accent || '#6D28D9' }} />
         <h2 className="font-bold" style={{ fontSize: 17, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>{title}</h2>
@@ -718,48 +718,34 @@ function ReportsContent() {
 
   return (
     <Layout>
+      <div className="ss-page">
       {/* Header */}
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-          <div>
-            <h1 className="font-bold" style={{ fontSize: 26, letterSpacing: '-0.03em', lineHeight: 1.2, color: 'var(--text-primary)' }}>
-              {isManager ? 'Team Reports' : 'My Reports'}
-            </h1>
-            <p className="text-sm mt-1.5" style={{ color: 'var(--text-muted)' }}>
-              {isManager ? 'Check-in analytics, cost visibility, and engagement health' : 'Your personal check-in analytics'}
-            </p>
-          </div>
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            {isManager && selectedTeamId && (
-              <button
-                onClick={() => router.push(`/reports/ai?team_id=${selectedTeamId}`)}
-                className="flex items-center gap-2 text-sm font-semibold transition-all backdrop-blur-xl"
-                style={{
-                  padding: '8px 16px', borderRadius: 9,
-                  background: 'linear-gradient(135deg, rgba(139,92,246,0.18), rgba(59,130,246,0.18))',
-                  border: '1px solid rgba(139,92,246,0.35)', color: '#a78bfa',
-                }}
-                title="Weekly AI-inferred automation opportunities"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Ai Task Radar
-              </button>
-            )}
-            <button
-              onClick={() => router.push('/dashboard')}
-              className="flex items-center gap-2 text-sm font-medium transition-all"
-              style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid var(--border-card)', background: 'var(--bg-card)', color: 'var(--text-muted)' }}
-            >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8 2L4 6.5 8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              Dashboard
-            </button>
-          </div>
+      <div className="ss-page-head">
+        <div>
+          <h1 className="ss-page-title">
+            {isManager ? 'Team Reports' : 'My Reports'}
+          </h1>
+          <p className="ss-page-sub">
+            {isManager ? 'Check-in analytics, cost visibility, and engagement health' : 'Your personal check-in analytics'}
+          </p>
         </div>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          {isManager && selectedTeamId && (
+            <button
+              onClick={() => router.push(`/reports/ai?team_id=${selectedTeamId}`)}
+              className="ss-btn accent"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              AI Radar
+            </button>
+          )}
+        </div>
+      </div>
 
         {/* Date range picker */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4 rounded-xl" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)' }}>
+        <div className="ss-card flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4">
           <span className="text-xs font-bold uppercase tracking-wider shrink-0" style={{ color: 'var(--text-muted)' }}>Date Range</span>
           <DateRangePicker
             startDate={startDate}
@@ -771,7 +757,6 @@ function ReportsContent() {
             {formatDateRangeLabel(startDate, endDate)}
           </span>
         </div>
-      </div>
 
       {/* Manager: team selector */}
       {isManager && (
@@ -779,7 +764,7 @@ function ReportsContent() {
           {teamsLoading ? (
             <TeamsLoadingSkeleton />
           ) : teams.length === 0 ? (
-            <div className="app-card glow-card p-12 text-center">
+            <div className="ss-card p-12 text-center">
               <div className="text-4xl mb-3">📊</div>
               <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>You don&apos;t own any teams yet.</p>
               <button onClick={() => router.push('/dashboard')} className="btn-primary text-sm">Go to Dashboard</button>
@@ -814,6 +799,7 @@ function ReportsContent() {
       )}
 
       {!isManager && <MemberReports startDate={startDate} endDate={endDate} />}
+      </div>
     </Layout>
   );
 }
