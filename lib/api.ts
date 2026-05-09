@@ -76,7 +76,8 @@ export async function apiCall<T = unknown>(
         continue;
       }
 
-      const data: unknown = await res.json();
+      const text = await res.text();
+      const data: unknown = text.length > 0 ? JSON.parse(text) : null;
 
       if (!res.ok) {
         throw new Error(extractErrorMessage(data));

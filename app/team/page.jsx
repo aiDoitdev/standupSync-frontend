@@ -297,8 +297,18 @@ function TeamPageInner() {
     e.preventDefault();
     const email = inviteEmail.trim().toLowerCase();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    if (pendingInvites.some((inv) => inv.email.toLowerCase() === email)) {
+      setInviteMsg('This email already has a pending invite.');
+      return;
+    }
+    const isFreePlan = team?.plan !== 'starter';
+    if (isFreePlan && pendingInvites.length + inviteEmails.length >= 1) {
+      setInviteMsg('__UPGRADE__');
+      return;
+    }
     if (!inviteEmails.includes(email)) {
       setInviteEmails((prev) => [...prev, email]);
+      setInviteMsg('');
     }
     setInviteEmail('');
   }
@@ -313,10 +323,17 @@ function TeamPageInner() {
     setInviting(true);
     setInviteMsg('');
     try {
-      await apiCall(`/teams/${teamId}/invite`, 'POST', { emails: inviteEmails });
-      setInviteMsg('✓ Invites sent!');
+      const result = await apiCall(`/teams/${teamId}/invite`, 'POST', { emails: inviteEmails });
       setInviteEmails([]);
       await fetchTeamData();
+      if (result.sent > 0) {
+        setInviteMsg('✓ Invites sent!');
+      } else if (result.skipped?.length > 0) {
+        const reasons = [...new Set(result.skipped.map((s) => s.reason))].join('; ');
+        setInviteMsg(`No invites sent — ${reasons}.`);
+      } else {
+        setInviteMsg('No invites were sent.');
+      }
     } catch (err) {
       const msg = typeof err.message === 'string' ? err.message : '';
       if (msg.includes('Upgrade') || msg.includes('upgrade') || msg.includes('402')) {
@@ -330,7 +347,6 @@ function TeamPageInner() {
   }
 
   async function handleRevokeInvite(inviteId) {
-    if (!confirm('Revoke this invitation?')) return;
     try {
       await apiCall(`/teams/${teamId}/pending-invites/${inviteId}`, 'DELETE');
       setPendingInvites((prev) => prev.filter((inv) => inv.id !== inviteId));
@@ -689,7 +705,7 @@ function TeamPageInner() {
               <div className="mt-3 rounded-xl p-4" style={{ background: 'rgba(109,40,217,0.12)', border: '1px solid rgba(139,92,246,0.3)' }}>
                 <p className="text-sm font-semibold text-violet-400 mb-1">Member limit reached</p>
                 <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>
-                  Free plan allows up to 3 members. Upgrade to Starter ($19/mo) for up to 15 members and unlimited teams.
+                  Free plan allows 1 invited member (2 people total including you). Upgrade to Starter ($19/mo) for unlimited members and teams.
                 </p>
                 <button
                   onClick={() => router.push(`/dashboard/billing?team_id=${teamId}`)}
